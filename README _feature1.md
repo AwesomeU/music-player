@@ -1,21 +1,14 @@
-# vue-music
+## 页面骨架开发
+> includes：
 
-> a music player
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+ - 页面入口 + header组件
+ - 路由配置 + tab菜单栏 
+ 	- 在router中配置路由，加入默认url tab标签页锁定
+ 	```
+	{
+        path: '/',
+        redirect: '/recommend'
+    }
+ 	```
+ 	- 配置完router，引入到vue实例（main.js）
+ 	- flex布局
