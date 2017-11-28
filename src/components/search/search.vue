@@ -7,5 +7,8 @@
 </script>
 
 <style type="stylesheet" scoped lang="stylus">
-
+h1{
+	margin-top: 100px;
+	color: #fff;
+}
 </style>
