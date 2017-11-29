@@ -83,14 +83,14 @@ export default{
             })
             console.log('slider初始化后：' + this.children.length)
 
-            this.slider.on(('scrollEnd', () => {
+            this.slider.on('scrollEnd', () => {
+                console.log(this.slider.getCurrentPage().pageX)
                 let pageIndex = this.slider.getCurrentPage().pageX
                 if (this.loop) {
-                    // 在循环模式下会默认向第一个元素添加一个拷贝
                     pageIndex -= 1
                 }
                 this.currentPageIndex = pageIndex
-            }))
+            })
         }
     }
 }
