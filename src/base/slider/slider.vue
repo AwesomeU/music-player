@@ -42,11 +42,23 @@ export default{
             this._setSliderWidth()
             this._initDots()
             this._initSlider()
+            // 自动播放
+            if (this.autoplay) {
+                this._play()
+            }
         }, 20)
+        // 改变视口大小监听
+        window.addEventListener('resize', () => {
+            if (!this.slider) {
+                return false
+            }
+            this._setSliderWidth(true)
+            this.slider.refresh()
+        })
     },
     methods: {
         // 设置slider的宽度
-        _setSliderWidth() {
+        _setSliderWidth(isResize) {
             this.children = this.$refs.sliderGroup.children
 
             let width = 0
@@ -60,7 +72,7 @@ export default{
                 // group的宽度
                 width += sliderWidth
             }
-            if (this.loop) {
+            if (this.loop && !isResize) {
                 width += 2 * sliderWidth
             }
             this.$refs.sliderGroup.style.width = width + 'px'
@@ -78,8 +90,8 @@ export default{
                 snap: true,
                 snapLoop: this.loop,
                 snapThreshold: 0.3,
-                snapSpeed: 400,
-                click: true
+                snapSpeed: 400
+                // click: true
             })
             console.log('slider初始化后：' + this.children.length)
 
@@ -90,8 +102,26 @@ export default{
                     pageIndex -= 1
                 }
                 this.currentPageIndex = pageIndex
+                // 避免手动滑动对自动轮播造成影响
+                if (this.autoplay) {
+                    clearTimeout(this.timer)
+                    this._play()
+                }
             })
+        },
+        // 自动播放设置
+        _play() {
+            let pageIndex = this.currentPageIndex + 1
+            if (this.loop) {
+                pageIndex += 1
+            }
+            this.timer = setTimeout(() => {
+                this.slider.goToPage(pageIndex, 0, 400)
+            }, this.interval)
         }
+    },
+    destoryed() {
+        clearTimeout(this.timer)
     }
 }
 </script>
